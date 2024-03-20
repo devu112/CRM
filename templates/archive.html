@@ -1,0 +1,38 @@
+{% extends "base.html" %}
+
+
+
+<!-- Specific Page CSS goes HERE  -->
+{% block stylesheets %}{% endblock stylesheets %}
+
+{% block content %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Archive</title>
+</head>
+<body>
+  <h1>Archived Cards</h1>
+  <div id="archivedCards"></div>
+
+  <script>
+    document.addEventListener("DOMContentLoaded", function() {
+      var archivedCards = JSON.parse(localStorage.getItem("archivedCards")) || [];
+
+      var archivedCardsContainer = document.getElementById("archivedCards");
+      archivedCards.forEach(function(cardId) {
+        var cardBody = localStorage.getItem(cardId);
+        var card = document.createElement("div");
+        card.innerHTML = cardBody;
+        archivedCardsContainer.appendChild(card);
+      });
+    });
+  </script>
+</body>
+</html>
+
+
+
+{% endblock content %}

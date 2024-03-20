@@ -1,0 +1,557 @@
+{% extends "base.html" %}
+
+
+
+<!-- Specific Page CSS goes HERE  -->
+{% block stylesheets %}{% endblock stylesheets %}
+
+{% block content %}
+<style>
+      .archive-popup {
+  display: none;
+  position: fixed;
+  bottom: 120px;
+  right: 120px;
+  background-color: #ffffff;
+  border: 1px solid #cccccc;
+  border-radius: 5px;
+  padding: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  z-index: 1000;
+}
+
+.archive-popup button {
+  display: block;
+  width: 100%;
+  padding: 10px;
+  border: none;
+  border-radius: 5px;
+  background-color: #007bff;
+  color: #ffffff;
+  font-size: 16px;
+  cursor: pointer;
+}
+
+.archive-popup button:hover {
+  background-color: #0056b3;
+}
+     .card {
+            border: 1px solid #ccc;
+            background-color: #f9f9f9;
+            border-radius: 5px;
+            padding: 10px;
+            margin-bottom: 10px;
+        }
+        
+        .archive-box {
+            border: 2px dashed #ccc;
+            background-color: #f0f0f0;
+            border-radius: 10px;
+            padding: 20px;
+            margin-top: 20px;
+        }
+       
+    .close {
+        color: #aaa;
+        float: right;
+        font-size: 28px;
+        font-weight: bold;
+    }
+
+    .close:hover,
+    .close:focus {
+        color: black;
+        text-decoration: none;
+        cursor: pointer;
+    }
+</style>
+
+    <div class="row">
+      <div class="col-lg-3 col-md-6 col-sm-6">
+        <div class="card card-stats">
+          <div class="card-header card-header-warning card-header-icon">
+            <div class="card-icon">
+              <i class="material-icons">content_copy</i>
+            </div>
+            <p class="card-category">Used Space</p>
+            <h3 class="card-title">49/50
+              <small>GB</small>
+            </h3>
+          </div>
+          <div class="card-footer">
+            <div class="stats">
+              <i class="material-icons text-danger">warning</i>
+              <a href="#pablo">Get More Space...</a>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="col-lg-3 col-md-6 col-sm-6">
+        <div class="card card-stats">
+          <div class="card-header card-header-success card-header-icon">
+            <div class="card-icon">
+              <i class="material-icons">store</i>
+            </div>
+            <p class="card-category">Revenue</p>
+            <h3 class="card-title">$34,245</h3>
+          </div>
+          <div class="card-footer">
+            <div class="stats">
+              <i class="material-icons">date_range</i> Last 24 Hours
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="col-lg-3 col-md-6 col-sm-6">
+        <div class="card card-stats">
+          <div class="card-header card-header-danger card-header-icon">
+            <div class="card-icon">
+              <i class="material-icons">info_outline</i>
+            </div>
+            <p class="card-category">Fixed Issues</p>
+            <h3 class="card-title">75</h3>
+          </div>
+          <div class="card-footer">
+            <div class="stats">
+              <i class="material-icons">local_offer</i> Tracked from Github
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="col-lg-3 col-md-6 col-sm-6">
+        <div class="card card-stats">
+          <div class="card-header card-header-info card-header-icon">
+            <div class="card-icon">
+              <i class="fa fa-twitter"></i>
+            </div>
+            <p class="card-category">Followers</p>
+            <h3 class="card-title">+245</h3>
+          </div>
+          <div class="card-footer">
+            <div class="stats">
+              <i class="material-icons">update</i> Just Updated
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+ 
+  
+    <div class="row">
+      <div class="col-md-4">
+        <div class="card card-chart" draggable="true" ondragstart="drag(event)">
+          <div class="card-header card-header-success">
+            <div class="ct-chart" id="dailySalesChart"></div>
+          </div>
+          <div class="card-body" draggable="true" >
+            <h4 class="card-title" draggable="true">Daily Sales</h4>
+            <p class="card-category">
+              <span class="text-success"><i class="fa fa-long-arrow-up"></i> 55% </span> increase in today sales.</p>
+          </div>
+          <div class="card-footer">
+            <div class="stats">
+              <i class="material-icons">access_time</i> updated 4 minutes ago
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-4">
+        <div class="card card-chart" draggable="true" ondragstart="drag(event)">
+          <div class="card-header card-header-warning">
+            <div class="ct-chart" id="websiteViewsChart"></div>
+          </div>
+          <div class="card-body" draggable="true">
+            <h4 class="card-title">Email Subscriptions</h4>
+            <p class="card-category">Last Campaign Performance</p>
+          </div>
+          <div class="card-footer">
+            <div class="stats">
+              <i class="material-icons">access_time</i> campaign sent 2 days ago
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-4">
+        <div class="card card-chart" draggable="true" ondragstart="drag(event)">
+          <div class="card-header card-header-danger">
+            <div class="ct-chart" id="completedTasksChart"></div>
+          </div>
+          <div class="card-body">
+            <h4 class="card-title">Completed Tasks</h4>
+            <p class="card-category">Last Campaign Performance</p>
+          </div>
+          <div class="card-footer">
+            <div class="stats">
+              <i class="material-icons">access_time</i> campaign sent 2 days ago
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div id="archivePopup" class="archive-popup" ondrop="drop(event)" ondragover="allowDrop(event)" style="display: none;">
+      <button id="archiveButton" class="btn btn-primary"> <i class="fa fa-archive" style="width: 150px;"></i> Archive</button>
+    </div>
+  
+    <div class="row">
+      <div class="col-lg-6 col-md-12">
+        <div class="card">
+          <div class="card-header card-header-tabs card-header-primary">
+            <div class="nav-tabs-navigation">
+              <div class="nav-tabs-wrapper">
+                <span class="nav-tabs-title">Tasks:</span>
+                <ul class="nav nav-tabs" data-tabs="tabs">
+                  <li class="nav-item">
+                    <a class="nav-link active" href="#profile" data-toggle="tab">
+                      <i class="material-icons">bug_report</i> Bugs
+                      <div class="ripple-container"></div>
+                    </a>
+                  </li>
+                  <li class="nav-item">
+                    <a class="nav-link" href="#messages" data-toggle="tab">
+                      <i class="material-icons">code</i> Website
+                      <div class="ripple-container"></div>
+                    </a>
+                  </li>
+                  <li class="nav-item">
+                    <a class="nav-link" href="#settings" data-toggle="tab">
+                      <i class="material-icons">cloud</i> Server
+                      <div class="ripple-container"></div>
+                    </a>
+                  </li>
+                </ul>
+              </div>
+            </div>
+          </div>
+          <div class="card-body">
+            <div class="tab-content">
+              <div class="tab-pane active" id="profile">
+                <table class="table">
+                  <tbody>
+                    <tr>
+                      <td>
+                        <div class="form-check">
+                          <label class="form-check-label">
+                            <input class="form-check-input" type="checkbox" value="" checked>
+                            <span class="form-check-sign">
+                              <span class="check"></span>
+                            </span>
+                          </label>
+                        </div>
+                      </td>
+                      <td>Sign contract for "What are conference organizers afraid of?"</td>
+                      <td class="td-actions text-right">
+                        <button type="button" rel="tooltip" title="Edit Task" class="btn btn-primary btn-link btn-sm">
+                          <i class="material-icons">edit</i>
+                        </button>
+                        <button type="button" rel="tooltip" title="Remove" class="btn btn-danger btn-link btn-sm">
+                          <i class="material-icons">close</i>
+                        </button>
+                      </td>
+                    </tr>
+                    <tr>
+                      <td>
+                        <div class="form-check">
+                          <label class="form-check-label">
+                            <input class="form-check-input" type="checkbox" value="">
+                            <span class="form-check-sign">
+                              <span class="check"></span>
+                            </span>
+                          </label>
+                        </div>
+                      </td>
+                      <td>Lines From Great Russian Literature? Or E-mails From My Boss?</td>
+                      <td class="td-actions text-right">
+                        <button type="button" rel="tooltip" title="Edit Task" class="btn btn-primary btn-link btn-sm">
+                          <i class="material-icons">edit</i>
+                        </button>
+                        <button type="button" rel="tooltip" title="Remove" class="btn btn-danger btn-link btn-sm">
+                          <i class="material-icons">close</i>
+                        </button>
+                      </td>
+                    </tr>
+                    <tr>
+                      <td>
+                        <div class="form-check">
+                          <label class="form-check-label">
+                            <input class="form-check-input" type="checkbox" value="">
+                            <span class="form-check-sign">
+                              <span class="check"></span>
+                            </span>
+                          </label>
+                        </div>
+                      </td>
+                      <td>Flooded: One year later, assessing what was lost and what was found when a ravaging rain swept through metro Detroit
+                      </td>
+                      <td class="td-actions text-right">
+                        <button type="button" rel="tooltip" title="Edit Task" class="btn btn-primary btn-link btn-sm">
+                          <i class="material-icons">edit</i>
+                        </button>
+                        <button type="button" rel="tooltip" title="Remove" class="btn btn-danger btn-link btn-sm">
+                          <i class="material-icons">close</i>
+                        </button>
+                      </td>
+                    </tr>
+                    <tr>
+                      <td>
+                        <div class="form-check">
+                          <label class="form-check-label">
+                            <input class="form-check-input" type="checkbox" value="" checked>
+                            <span class="form-check-sign">
+                              <span class="check"></span>
+                            </span>
+                          </label>
+                        </div>
+                      </td>
+                      <td>Create 4 Invisible User Experiences you Never Knew About</td>
+                      <td class="td-actions text-right">
+                        <button type="button" rel="tooltip" title="Edit Task" class="btn btn-primary btn-link btn-sm">
+                          <i class="material-icons">edit</i>
+                        </button>
+                        <button type="button" rel="tooltip" title="Remove" class="btn btn-danger btn-link btn-sm">
+                          <i class="material-icons">close</i>
+                        </button>
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+              <div class="tab-pane" id="messages">
+                <table class="table">
+                  <tbody>
+                    <tr>
+                      <td>
+                        <div class="form-check">
+                          <label class="form-check-label">
+                            <input class="form-check-input" type="checkbox" value="" checked>
+                            <span class="form-check-sign">
+                              <span class="check"></span>
+                            </span>
+                          </label>
+                        </div>
+                      </td>
+                      <td>Flooded: One year later, assessing what was lost and what was found when a ravaging rain swept through metro Detroit
+                      </td>
+                      <td class="td-actions text-right">
+                        <button type="button" rel="tooltip" title="Edit Task" class="btn btn-primary btn-link btn-sm">
+                          <i class="material-icons">edit</i>
+                        </button>
+                        <button type="button" rel="tooltip" title="Remove" class="btn btn-danger btn-link btn-sm">
+                          <i class="material-icons">close</i>
+                        </button>
+                      </td>
+                    </tr>
+                    <tr>
+                      <td>
+                        <div class="form-check">
+                          <label class="form-check-label">
+                            <input class="form-check-input" type="checkbox" value="">
+                            <span class="form-check-sign">
+                              <span class="check"></span>
+                            </span>
+                          </label>
+                        </div>
+                      </td>
+                      <td>Sign contract for "What are conference organizers afraid of?"</td>
+                      <td class="td-actions text-right">
+                        <button type="button" rel="tooltip" title="Edit Task" class="btn btn-primary btn-link btn-sm">
+                          <i class="material-icons">edit</i>
+                        </button>
+                        <button type="button" rel="tooltip" title="Remove" class="btn btn-danger btn-link btn-sm">
+                          <i class="material-icons">close</i>
+                        </button>
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+              <div class="tab-pane" id="settings">
+                <table class="table">
+                  <tbody>
+                    <tr>
+                      <td>
+                        <div class="form-check">
+                          <label class="form-check-label">
+                            <input class="form-check-input" type="checkbox" value="">
+                            <span class="form-check-sign">
+                              <span class="check"></span>
+                            </span>
+                          </label>
+                        </div>
+                      </td>
+                      <td>Lines From Great Russian Literature? Or E-mails From My Boss?</td>
+                      <td class="td-actions text-right">
+                        <button type="button" rel="tooltip" title="Edit Task" class="btn btn-primary btn-link btn-sm">
+                          <i class="material-icons">edit</i>
+                        </button>
+                        <button type="button" rel="tooltip" title="Remove" class="btn btn-danger btn-link btn-sm">
+                          <i class="material-icons">close</i>
+                        </button>
+                      </td>
+                    </tr>
+                    <tr>
+                      <td>
+                        <div class="form-check">
+                          <label class="form-check-label">
+                            <input class="form-check-input" type="checkbox" value="" checked>
+                            <span class="form-check-sign">
+                              <span class="check"></span>
+                            </span>
+                          </label>
+                        </div>
+                      </td>
+                      <td>Flooded: One year later, assessing what was lost and what was found when a ravaging rain swept through metro Detroit
+                      </td>
+                      <td class="td-actions text-right">
+                        <button type="button" rel="tooltip" title="Edit Task" class="btn btn-primary btn-link btn-sm">
+                          <i class="material-icons">edit</i>
+                        </button>
+                        <button type="button" rel="tooltip" title="Remove" class="btn btn-danger btn-link btn-sm">
+                          <i class="material-icons">close</i>
+                        </button>
+                      </td>
+                    </tr>
+                    <tr>
+                      <td>
+                        <div class="form-check">
+                          <label class="form-check-label">
+                            <input class="form-check-input" type="checkbox" value="" checked>
+                            <span class="form-check-sign">
+                              <span class="check"></span>
+                            </span>
+                          </label>
+                        </div>
+                      </td>
+                      <td>Sign contract for "What are conference organizers afraid of?"</td>
+                      <td class="td-actions text-right">
+                        <button type="button" rel="tooltip" title="Edit Task" class="btn btn-primary btn-link btn-sm">
+                          <i class="material-icons">edit</i>
+                        </button>
+                        <button type="button" rel="tooltip" title="Remove" class="btn btn-danger btn-link btn-sm">
+                          <i class="material-icons">close</i>
+                        </button>
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="col-lg-6 col-md-12">
+        <div class="card">
+          <div class="card-header card-header-warning">
+            <h4 class="card-title">Employees Stats</h4>
+            <p class="card-category">New employees on 15th September, 2016</p>
+          </div>
+          <div class="card-body table-responsive">
+            <table class="table table-hover">
+              <thead class="text-warning">
+                <th>ID</th>
+                <th>Name</th>
+                <th>Salary</th>
+                <th>Country</th>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>1</td>
+                  <td>Dakota Rice</td>
+                  <td>$36,738</td>
+                  <td>Niger</td>
+                </tr>
+                <tr>
+                  <td>2</td>
+                  <td>Minerva Hooper</td>
+                  <td>$23,789</td>
+                  <td>Curaçao</td>
+                </tr>
+                <tr>
+                  <td>3</td>
+                  <td>Sage Rodriguez</td>
+                  <td>$56,142</td>
+                  <td>Netherlands</td>
+                </tr>
+                <tr>
+                  <td>4</td>
+                  <td>Philip Chaney</td>
+                  <td>$38,735</td>
+                  <td>Korea, South</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+ 
+{% endblock content %}
+
+<!-- Specific Page JS goes HERE  -->
+{% block javascripts %}
+
+  <script>
+    $(document).ready(function() {
+      // Javascript method's body can be found in assets/js/demos.js
+      md.initDashboardPageCharts();
+
+    });
+  </script>
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+  <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.min.js"></script>
+  <script>
+    function drag(ev) {
+      ev.dataTransfer.setData("text", ev.target.id);
+      showPopup();
+    }
+  
+    function showPopup() {
+      var popup = document.getElementById("archivePopup");
+      popup.style.display = "block";
+    }
+  
+    function drop(ev) {
+      ev.preventDefault();
+      var cardId = ev.dataTransfer.getData("text");
+      var cardBody = document.getElementById(cardId).innerHTML;
+      localStorage.setItem(cardId, cardBody);
+  
+      var archivedCards = JSON.parse(localStorage.getItem("archivedCards")) || [];
+      archivedCards.push(cardId);
+      localStorage.setItem("archivedCards", JSON.stringify(archivedCards));
+  
+      var card = document.getElementById(cardId);
+      card.parentNode.removeChild(card); // Remove the card from the DOM
+  
+      hidePopup();
+    }
+  
+    function allowDrop(ev) {
+      ev.preventDefault();
+    }
+  
+    function hidePopup() {
+      var popup = document.getElementById("archivePopup");
+      popup.style.display = "none";
+    }
+  
+    document.addEventListener("dragover", function(ev) {
+      ev.preventDefault();
+    });
+  
+    document.addEventListener("drop", function(ev) {
+      ev.preventDefault();
+      var cardId = ev.dataTransfer.getData("text");
+      var cardBody = document.getElementById(cardId).innerHTML;
+      localStorage.setItem(cardId, cardBody);
+  
+      var archivedCards = JSON.parse(localStorage.getItem("archivedCards")) || [];
+      archivedCards.push(cardId);
+      localStorage.setItem("archivedCards", JSON.stringify(archivedCards));
+  
+      var card = document.getElementById(cardId);
+      card.parentNode.removeChild(card);
+  
+      hidePopup();
+    });
+  </script>
+{% endblock javascripts %}
