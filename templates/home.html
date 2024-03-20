@@ -1,4 +1,5 @@
 {% extends "base.html" %}
+{% load static %}
 
 
 
@@ -26,7 +27,7 @@
   padding: 10px;
   border: none;
   border-radius: 5px;
-  background-color: #007bff;
+  background-color: #ff0000;
   color: #ffffff;
   font-size: 16px;
   cursor: pointer;
@@ -156,7 +157,7 @@
         </div>
       </div>
       <div class="col-md-4">
-        <div class="card card-chart" draggable="true" ondragstart="drag(event)">
+        <div class="card card-chart" draggable="true" ondragstart="drag(event)" >
           <div class="card-header card-header-warning">
             <div class="ct-chart" id="websiteViewsChart"></div>
           </div>
@@ -172,7 +173,7 @@
         </div>
       </div>
       <div class="col-md-4">
-        <div class="card card-chart" draggable="true" ondragstart="drag(event)">
+        <div class="card card-chart" draggable="true" ondragstart="drag(event)" >
           <div class="card-header card-header-danger">
             <div class="ct-chart" id="completedTasksChart"></div>
           </div>
@@ -188,9 +189,88 @@
         </div>
       </div>
     </div>
-    <div id="archivePopup" class="archive-popup" ondrop="drop(event)" ondragover="allowDrop(event)" style="display: none;">
-      <button id="archiveButton" class="btn btn-primary"> <i class="fa fa-archive" style="width: 150px;"></i> Archive</button>
+    
+  <div class="row">
+    <!-- Paid card -->
+    <div class="col-md-4">
+        <div class="card card-chart" draggable="true" ondragstart="drag(event)" id="card1">
+            <div class="card-header card-header-info">
+                <div class="ct-chart" id="paidChart"></div>
+            </div>
+            <div class="card-body">
+                <h4 class="card-title">Paid</h4>
+                <p class="card-category">Revenue from paid services</p>
+                <div class="rating">
+                  <span class="fa fa-star checked"></span>
+                  <span class="fa fa-star checked"></span>
+                  <span class="fa fa-star checked"></span>
+                  <span class="fa fa-star"></span>
+                  <span class="fa fa-star"></span>
+                  <img src="{% static 'img/Collab-rafiki.png' %}" class="img-fluid" alt="Responsive image">
+              </div>
+            </div>
+            <div class="card-footer">
+                <div class="stats">
+                    <i class="material-icons">attach_money</i> Revenue earned
+                </div>
+            </div>
+        </div>
     </div>
+    <!-- Lead card -->
+    <div class="col-md-4">
+        <div class="card card-chart" draggable="true" ondragstart="drag(event)" id="card2">
+            <div class="card-header card-header-primary">
+                <div class="ct-chart" id="leadChart"></div>
+            </div>
+            <div class="card-body">
+                <h4 class="card-title">Lead</h4>
+                <p class="card-category">Number of potential customers</p>
+                <div class="rating">
+                  <span class="fa fa-star checked"></span>
+                  <span class="fa fa-star checked"></span>
+                  <span class="fa fa-star checked"></span>
+                  <span class="fa fa-star"></span>
+                  <span class="fa fa-star"></span>
+                  <img src="{% static 'img/Business deal-amico.png' %}" class="img-fluid" alt="Responsive image">
+              </div>
+            </div>
+            <div class="card-footer">
+                <div class="stats">
+                    <i class="material-icons">people_alt</i> Potential customers
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Profit card -->
+    <div class="col-md-4">
+        <div class="card card-chart" draggable="true" ondragstart="drag(event)" id="card3">
+            <div class="card-header card-header-success">
+                <div class="ct-chart" id="profitChart"></div>
+            </div>
+            <div class="card-body">
+                <h4 class="card-title">Profit</h4>
+                <p class="card-category">Total profit generated</p>
+                <div class="rating">
+                  <span class="fa fa-star checked"></span>
+                  <span class="fa fa-star checked"></span>
+                  <span class="fa fa-star checked"></span>
+                  <span class="fa fa-star"></span>
+                  <span class="fa fa-star"></span>
+                  <img src="{% static 'img\Profile Interface-bro.png' %}" class="img-fluid" alt="Responsive image">
+              </div>
+            </div>
+            <div class="card-footer">
+                <div class="stats">
+                    <i class="material-icons">trending_up</i> Growth in profit
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div id="archivePopup" class="archive-popup">
+    <button id="archiveButton" class="btn btn-primary"> <i class="fa fa-archive"></i> Archive</button>
+</div>
   
     <div class="row">
       <div class="col-lg-6 col-md-12">
@@ -483,6 +563,30 @@
         </div>
       </div>
     </div>
+
+    <footer class="footer">
+      <div class="container">
+          <div class="row">
+              <div class="col-md-6">
+                  <p>&copy; 2024 Your Company. All rights reserved.</p>
+              </div>
+              <div class="col-md-6">
+                  <ul class="social-icons">
+                      <li><a href="#" class="fa fa-facebook"></a></li>
+                      <li><a href="#" class="fa fa-twitter"></a></li>
+                      <li><a href="#" class="fa fa-instagram"></a></li>
+                      <!-- Add other social media links as needed -->
+                  </ul>
+              </div>
+          </div>
+          <div class="row">
+              <div class="col-md-12">
+                  <p>Contact us: email@example.com | Phone: +1234567890</p>
+                  <!-- Add other contact information as needed -->
+              </div>
+          </div>
+      </div>
+  </footer>
  
 {% endblock content %}
 
@@ -496,62 +600,71 @@
 
     });
   </script>
-  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-  <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.min.js"></script>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+
   <script>
     function drag(ev) {
-      ev.dataTransfer.setData("text", ev.target.id);
-      showPopup();
+        ev.dataTransfer.setData("text", ev.target.id);
+        showPopup();
+        ev.dataTransfer.setDragImage(new Image(), 0, 0); // Prevent the cross mark symbol
+        setTimeout(hidePopup, 3000);
     }
-  
+
     function showPopup() {
-      var popup = document.getElementById("archivePopup");
-      popup.style.display = "block";
+        var popup = document.getElementById("archivePopup");
+        popup.style.display = "block";
     }
-  
-    function drop(ev) {
-      ev.preventDefault();
-      var cardId = ev.dataTransfer.getData("text");
-      var cardBody = document.getElementById(cardId).innerHTML;
-      localStorage.setItem(cardId, cardBody);
-  
-      var archivedCards = JSON.parse(localStorage.getItem("archivedCards")) || [];
-      archivedCards.push(cardId);
-      localStorage.setItem("archivedCards", JSON.stringify(archivedCards));
-  
-      var card = document.getElementById(cardId);
-      card.parentNode.removeChild(card); // Remove the card from the DOM
-  
-      hidePopup();
-    }
-  
-    function allowDrop(ev) {
-      ev.preventDefault();
-    }
-  
+
     function hidePopup() {
-      var popup = document.getElementById("archivePopup");
-      popup.style.display = "none";
+        var popup = document.getElementById("archivePopup");
+        popup.style.display = "none";
     }
-  
-    document.addEventListener("dragover", function(ev) {
-      ev.preventDefault();
+
+    document.getElementById("archiveButton").addEventListener("dragover", function(ev) {
+        ev.preventDefault();
     });
-  
-    document.addEventListener("drop", function(ev) {
-      ev.preventDefault();
-      var cardId = ev.dataTransfer.getData("text");
-      var cardBody = document.getElementById(cardId).innerHTML;
-      localStorage.setItem(cardId, cardBody);
-  
-      var archivedCards = JSON.parse(localStorage.getItem("archivedCards")) || [];
-      archivedCards.push(cardId);
-      localStorage.setItem("archivedCards", JSON.stringify(archivedCards));
-  
-      var card = document.getElementById(cardId);
-      card.parentNode.removeChild(card);
-  
-      hidePopup();
+
+    document.getElementById("archiveButton").addEventListener("drop", function(ev) {
+        ev.preventDefault();
+        var cardId = ev.dataTransfer.getData("text");
+        var cardBody = document.getElementById(cardId).outerHTML; // Store entire card HTML
+
+        // Store card body in local storage with card ID as key
+        localStorage.setItem(cardId, cardBody);
+
+        var archivedCards = JSON.parse(localStorage.getItem("archivedCards")) || [];
+
+        archivedCards.push(cardId);
+        localStorage.setItem("archivedCards", JSON.stringify(archivedCards));
+
+        var card = document.getElementById(cardId);
+        card.parentNode.removeChild(card);
+
+        hidePopup();
+
+        // Update card display based on archived status
+        updateCardDisplay();
     });
-  </script>
+
+    function updateCardDisplay() {
+        var archivedCards = JSON.parse(localStorage.getItem("archivedCards")) || [];
+        var allCards = document.querySelectorAll('.card');
+
+        allCards.forEach(function(card) {
+            var cardId = card.id;
+
+            // Display or hide card based on its archived status
+            if (!archivedCards.includes(cardId)) {
+                card.style.display = 'block';
+            } else {
+                card.style.display = 'none';
+            }
+        });
+    }
+
+    // Call updateCardDisplay on page load
+    updateCardDisplay();
+</script>
+
 {% endblock javascripts %}
+ 

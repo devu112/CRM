@@ -6,6 +6,37 @@
 {% block stylesheets %}{% endblock stylesheets %}
 
 {% block content %}
+<style>
+  
+  /* Styles for the unarchive button */
+  .unarchive-button {
+    background-color: rgb(16, 36, 139) ; /* Green */
+    border: none;
+    color: rgb(201, 195, 195);
+    padding: 10px 20px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    margin: 4px 2px;
+    cursor: pointer;
+    border-radius: 8px;
+    transition-duration: 0.4s;
+  }
+
+  .unarchive-button:hover {
+    background-color: #4549a0; 
+  }
+  .card {
+            border: 1px solid #ccc;
+            background-color: #f9f9f9;
+            border-radius: 5px;
+            padding: 10px;
+            margin-bottom: 10px;
+            max-width: 100%;
+        }
+</style>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -15,21 +46,39 @@
 </head>
 <body>
   <h1>Archived Cards</h1>
-  <div id="archivedCards"></div>
+  <div class="row" id="archivedCards"></div>
 
   <script>
     document.addEventListener("DOMContentLoaded", function() {
       var archivedCards = JSON.parse(localStorage.getItem("archivedCards")) || [];
-
+  
       var archivedCardsContainer = document.getElementById("archivedCards");
       archivedCards.forEach(function(cardId) {
         var cardBody = localStorage.getItem(cardId);
         var card = document.createElement("div");
+        card.className = "col-md-4"; // Add the 'card' class to the archived card
         card.innerHTML = cardBody;
+        // Create a button to unarchive the card
+        var unarchiveButton = document.createElement("button");
+        unarchiveButton.innerText = "Unarchive";
+        unarchiveButton.classList.add("unarchive-button"); // Add class for styling
+        unarchiveButton.addEventListener("click", function() {
+          // Remove the card ID from archivedCards array
+          archivedCards = archivedCards.filter(function(id) {
+            return id !== cardId;
+          });
+          localStorage.setItem("archivedCards", JSON.stringify(archivedCards));
+          // Remove the card from the archive page
+          card.remove();
+        });
+        card.appendChild(unarchiveButton);
         archivedCardsContainer.appendChild(card);
       });
     });
   </script>
+  
+  
+
 </body>
 </html>
 
